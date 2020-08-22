@@ -4,7 +4,7 @@
   "description": "为Javascript操作树结构数据提供的一些便捷接口",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "git push && rollup -c"
+    "prepublishOnly": "rollup -c"
   },
   "keywords": [
     "树遍历",

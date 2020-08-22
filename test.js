@@ -119,12 +119,12 @@ function testTreeForEach () {
 }
 
 function test () {
-  // testTreeToList()
-  // testListToTree()
-  // testTreeFindNode()
-  // testTreeFindNodeAll()
-  // testTreeFindPath()
-  // testTreeFilter()
+  testTreeToList()
+  testListToTree()
+  testTreeFindNode()
+  testTreeFindNodeAll()
+  testTreeFindPath()
+  testTreeFilter()
   testTreeForEach()
 }
 
