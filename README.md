@@ -1,7 +1,7 @@
 ## JS树结构数据处理工具
 
 ## 一、简介
-js-tree-tool是一个用于处理js树结构的一些函数，无任何依赖，体积非常小，仅有3KB。
+tree-tool是一个用于处理js树结构的一些函数，无任何依赖，体积非常小，仅有3KB。
 
 其实代码本身很简单，但是因为问我的同学太多了，加之我在好几个项目需要用到几乎完全相同的代码，我就写了些非常通用的函数收集在这个库里。
 
@@ -9,9 +9,9 @@ js-tree-tool是一个用于处理js树结构的一些函数，无任何依赖，
 ## 二、安装
 ```bash
 #使用yarn
-yarn add js-tree-tool
+yarn add tree-tool
 #使用npm
-npm install js-tree-tool
+npm install tree-tool
 ```
 
 ## 三、使用
@@ -19,10 +19,10 @@ npm install js-tree-tool
 ### 引用
 ```js
 // commonjs
-const treeTool = require('js-tree-tool')
+const treeTool = require('tree-tool')
 
 // esm
-import treeTool from 'js-tree-tool'
+import treeTool from 'tree-tool'
 ```
 
 ### API说明

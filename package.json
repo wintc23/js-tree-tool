@@ -1,5 +1,5 @@
 {
-  "name": "js-tree-tool",
+  "name": "tree-tool",
   "version": "1.0.0",
   "description": "为Javascript操作树结构数据提供的一些便捷接口",
   "scripts": {
