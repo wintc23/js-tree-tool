@@ -27,11 +27,11 @@ import treeTool from 'tree-tool'
 
 ### API说明
 | 功能 | API  | 备注 |
-| ---- | :----: | :----: | :----: |
+| ---- | :----: | :----: |
 | 列表结构转树结构 | treeTool.listToTree(list[, config]) | |
 | 树结构转列表结构 | treeTool.treeToList(tree[, config] ) | |
 | 查找符合条件的单个节点 | treeTool.treeFindNode(tree, callback[, config]) | 返回广度优先遍历查找到的第一个符合条件(callback(node)为true)的节点，没有则返回null |
-| 查找符合条件的所有节点 | treeTool.treeFindNodeAll(tree, callback[, config]) |
+| 查找符合条件的所有节点 | treeTool.treeFindNodeAll(tree, callback[, config]) | |
 | 查找节点路径 | treeTool.treeFilter(tree, callback[, config]) | 返回符合条件(callback(node)为true)的节点的所有祖先节点有序组成的数组，没有找到节点则返回null |
 | 树结构筛选 | treeTool.treeFindNode(tree, callback[, config]) | 返回符合筛选条件(callback(node)为true)的树节点构成的树，一个节点符合条件，其祖先节点也会被保留返回 |
 | 树结构遍历 | treeTool.treeForEach(tree, callback[, config]) | 对于所有节点node调用callback(node)，广度优先 |
