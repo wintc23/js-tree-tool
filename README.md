@@ -165,18 +165,21 @@ function getList () {
 // 创建一个实例，因为数据里的pid属性名与默认值不同，所以需要传递该配置项
 const instance = tree.createInstance({ pid: 'parentId' })
 
-function testTreeToList () {
-  const tree = getTree()
-  const list = instance.treeToList(tree)
-  console.log(JSON.stringify(list, null, 2))
-}
-
+// 列表结构转树
 function testListToTree () {
   const list = getList()
   const tree = instance.listToTree(list)
   console.log(JSON.stringify(tree, null, 2))
 }
 
+// 树结构转列表结构
+function testTreeToList () {
+  const tree = getTree()
+  const list = instance.treeToList(tree)
+  console.log(JSON.stringify(list, null, 2))
+}
+
+// 查找节点
 function testTreeFindNode () {
   const callback = node => node.id == '2-1'
   const tree = getTree()
@@ -184,6 +187,7 @@ function testTreeFindNode () {
   console.log(JSON.stringify(result, null, 2))
 }
 
+// 查找符合条件的所有节点
 function testTreeFindNodeAll () {
   const list = getList()
   const tree = instance.listToTree(list)
@@ -193,6 +197,7 @@ function testTreeFindNodeAll () {
   console.log(JSON.stringify(result, null, 2))
 }
 
+// 查找节点路径
 function testTreeFindPath () {
   const callback = node => node.id == '2-1'
   const tree = getTree()
@@ -200,6 +205,7 @@ function testTreeFindPath () {
   console.log(JSON.stringify(result, null, 2))
 }
 
+// 树节点过滤
 function testTreeFilter () {
   const callback = node => node.id == '2-1'
   const tree = getTree()
@@ -207,6 +213,7 @@ function testTreeFilter () {
   console.log(JSON.stringify(result, null, 2))
 }
 
+// 树节点遍历
 function testTreeForEach () {
   const tree = getTree()
   const idList = []

@@ -37,7 +37,7 @@ function getTree () {
 }
 
 function getList () {
-  let list = [
+  const list = [
     {
       id: '1',
       title: '节点1',

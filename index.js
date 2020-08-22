@@ -18,7 +18,7 @@ const treeHanlder = {
     }
     return result
   },
-  
+
   treeToList (tree, config = {}) {
     config = Object.assign({}, DEFAULT_CONFIG, config)
     const { children } = config, result = [...tree]
