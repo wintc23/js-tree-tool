@@ -27,7 +27,7 @@ import treeTool from 'js-tree-tool'
 
 ### API说明
 | 功能 | API  | 备注 |
-| ---- | ---- | ---- | ---- |
+| ---- | :----: | :----: | :----: |
 | 列表结构转树结构 | treeTool.listToTree(list[, config]) | |
 | 树结构转列表结构 | treeTool.treeToList(tree[, config] ) | |
 | 查找符合条件的单个节点 | treeTool.treeFindNode(tree, callback[, config]) | 返回广度优先遍历查找到的第一个符合条件(callback(node)为true)的节点，没有则返回null |
