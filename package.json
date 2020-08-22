@@ -1,0 +1,24 @@
+{
+  "name": "js-tree-tool",
+  "version": "0.1.0",
+  "description": "为Javascript操作树结构数据提供的一些便捷接口",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "git push && rollup -c"
+  },
+  "keywords": [
+    "树遍历",
+    "树查找",
+    "树筛选",
+    "树和列表转换"
+  ],
+  "author": "wintc",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "unpkg": "dist/index.js",
+  "module": "dist/index.js"
+}
