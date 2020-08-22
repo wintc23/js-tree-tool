@@ -38,9 +38,9 @@ import treeTool from 'tree-tool'
 | 创建闭包了配置项config的实例 | treeTool.createInstance(config) | 为了避免每个函数都传入config参数，你可以使用该API创建一个实例，以上所有API可以当成实例方法使用 |
 
 参数说明：
-1. list 列表 给定一组node节点列表，每个node节点至少包含两个属性：唯一标识和父节点标识，例如：
+#### 1. list 列表 给定一组node节点列表，每个node节点至少包含两个属性：唯一标识和父节点标识，例如：
   ```js
-    let list = [
+  const list = [
     { id: '1', title: '节点1', parentId: '', },
     { id: '1-1', title: '节点1-1', parentId: '1' },
     { id: '1-2', title: '节点1-2', parentId: '1' },
@@ -48,7 +48,7 @@ import treeTool from 'tree-tool'
     { id: '2-1', title: '节点2-1', parentId: '2' }
   ]
   ```
-2. tree 树结构数据 一个数组表示的一棵树，例如：
+#### 2. tree 树结构数据 一个数组表示的一棵树，例如：
   ```js
   const tree = [
     {
@@ -83,8 +83,8 @@ import treeTool from 'tree-tool'
     }
   ]
   ```
-3. callback 回调函数，接收node参数，在查找、筛选等功能中表示约束条件，在遍历功能中则为对每个节点的操作。
-4. config 可选，用于自定义node节点的唯一标识、父节点、子节点的属性名称，默认值如下（可只定义其中某几个）
+#### 3. callback 回调函数，接收node参数，在查找、筛选等功能中表示约束条件，在遍历功能中则为对每个节点的操作。
+#### 4. config 可选，用于自定义node节点的唯一标识、父节点、子节点的属性名称，默认值如下（可只定义其中某几个）
   ```js
   {
     id: 'id', // 唯一标识属性名
