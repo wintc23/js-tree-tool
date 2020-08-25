@@ -28,13 +28,16 @@ import treeTool from 'tree-tool'
 ### API说明
 | 功能 | API  | 备注 |
 | ---- | :----: | :----: |
-| 列表结构转树结构 | treeTool.listToTree(list[, config]) | |
-| 树结构转列表结构 | treeTool.treeToList(tree[, config] ) | |
-| 查找符合条件的单个节点 | treeTool.treeFindNode(tree, callback[, config]) | 返回广度优先遍历查找到的第一个符合条件(callback(node)为true)的节点，没有则返回null |
-| 查找符合条件的所有节点 | treeTool.treeFindNodeAll(tree, callback[, config]) | |
-| 查找节点路径 | treeTool.treeFilter(tree, callback[, config]) | 返回符合条件(callback(node)为true)的节点的所有祖先节点有序组成的数组，没有找到节点则返回null |
-| 树结构筛选 | treeTool.treeFindNode(tree, callback[, config]) | 返回符合筛选条件(callback(node)为true)的树节点构成的树，一个节点符合条件，其祖先节点也会被保留返回 |
-| 树结构遍历 | treeTool.treeForEach(tree, callback[, config]) | 对于所有节点node调用callback(node)，广度优先 |
+| 列表结构转树结构 | treeTool.fromList(list[, config]) | |
+| 树结构转列表结构 | treeTool.toList(tree[, config] ) | |
+| 查找符合条件的单个节点 | treeTool.findNode(tree, callback[, config]) | 返回广度优先遍历查找到的第一个符合条件(callback(node)为true)的节点，没有则返回null |
+| 查找符合条件的所有节点 | treeTool.findNodeAll(tree, callback[, config]) | |
+| 查找符合条件的单个节点的路径 | treeTool.findPath(tree, callback[, config]) | 返回符合条件(callback(node)为true)的节点的所有祖先节点有序组成的数组，没有找到节点则返回null |
+| 查找符合条件的所有节点的路径 | treeTool.findPathAll(tree, callback[, config]) | 返回符合条件(callback(node)为true)的节点路径组成的数组 |
+| 树结构筛选 | treeTool.filter(tree, callback[, config]) | 返回符合筛选条件(callback(node)为true)的树节点构成的树，一个节点符合条件，其祖先节点也会被保留返回 |
+| 树结构遍历 | treeTool.forEach(tree, callback[, config]) | 对于所有节点node调用callback(node)，深度优先 |
+| 在指定node前插入newNode | treeTool.insertBefore (tree, newNode, oldNode[, config]) { | 如果树中没有oldNode，则不会改变原数组。注意node和newNode的参数顺序，和它们在树中的顺序一致 |
+| 在指定node后插入newNode | treeTool.insertAfter (tree, oldNode, newNode[, config]) { | 如果树中没有oldNode，则不会改变原数组。注意node和newNode的参数顺序，和它们在树中的顺序一致 |
 | 创建闭包了配置项config的实例 | treeTool.createInstance(config) | 为了避免每个函数都传入config参数，你可以使用该API创建一个实例，以上所有API可以当成实例方法使用 |
 
 参数说明：
@@ -95,6 +98,8 @@ import treeTool from 'tree-tool'
 
 ## 四、使用示例
 ```js
+const tree = require('./index')
+
 function getTree () {
   const tree = [
     {
@@ -166,60 +171,97 @@ function getList () {
 const instance = tree.createInstance({ pid: 'parentId' })
 
 // 列表结构转树
-function testListToTree () {
+function testFromList () {
   const list = getList()
-  const tree = instance.listToTree(list)
+  const tree = instance.fromList(list)
   console.log(JSON.stringify(tree, null, 2))
 }
 
 // 树结构转列表结构
-function testTreeToList () {
+function testToList () {
   const tree = getTree()
-  const list = instance.treeToList(tree)
-  console.log(JSON.stringify(list, null, 2))
+  const list = instance.toList(tree)
+  console.log(list.map(i => i.id))
 }
 
 // 查找节点
-function testTreeFindNode () {
+function testFindNode () {
   const callback = node => node.id == '2-1'
   const tree = getTree()
-  const result = instance.treeFindNode(tree, callback)
+  const result = instance.findNode(tree, callback)
   console.log(JSON.stringify(result, null, 2))
 }
 
 // 查找符合条件的所有节点
-function testTreeFindNodeAll () {
+function testFindNodeAll () {
   const list = getList()
-  const tree = instance.listToTree(list)
+  const tree = instance.fromList(list)
   
   const callback = node => node.parentId == '1'
-  const result = instance.treeFindNodeAll(tree, callback)
+  const result = instance.findNodeAll(tree, callback)
   console.log(JSON.stringify(result, null, 2))
 }
 
 // 查找节点路径
-function testTreeFindPath () {
+function testFindPath () {
   const callback = node => node.id == '2-1'
   const tree = getTree()
-  const result = instance.treeFindPath(tree, callback)
-  console.log(JSON.stringify(result, null, 2))
+  const result = instance.findPath(tree, callback)
+  console.log(result.map(i => i.id))
+}
+
+// 查找符合条件的所有节点的路径
+function testFindPathAll () {
+  const callback = node => node.id == '2-1' || node.id == '1-2-1'
+  const tree = getTree()
+  const result = instance.findPathAll(tree, callback)
+  console.log(result)
 }
 
 // 树节点过滤
-function testTreeFilter () {
+function testFilter () {
   const callback = node => node.id == '2-1'
   const tree = getTree()
-  const result = instance.treeFilter(tree, callback)
+  const result = instance.filter(tree, callback)
   console.log(JSON.stringify(result, null, 2))
 }
 
-// 树节点遍历
-function testTreeForEach () {
+// 树节点遍历 深度优先
+function testForEach () {
   const tree = getTree()
   const idList = []
-  instance.treeForEach(tree, node => idList.push(node.id))
+  instance.forEach(tree, node => idList.push(node.id))
   console.log(idList)
 }
+
+// 节点插入：在node前插入newNode
+function testInsertBefore () {
+  const tree = getTree()
+  const node = instance.findNode(tree, n => n.id == '1-2-1')
+  const newNode = {
+    id: '1-2-0',
+    title: '节点1-2-0'
+  }
+  instance.insertBefore(tree, newNode, node)
+  const idList = []
+  instance.forEach(tree, node => idList.push(node.id))
+  console.log(idList)
+}
+
+// 节点插入：在node后插入newNode
+function testInsertAfter () {
+  const tree = getTree()
+  const node = instance.findNode(tree, n => n.id == '1-2-1')
+  const newNode = {
+    id: '1-2-2',
+    title: '节点1-2-2'
+  }
+  instance.insertAfter(tree, node, newNode)
+  const idList = []
+  instance.forEach(tree, node => idList.push(node.id))
+  console.log(idList)
+}
+
 ```
 
 -------

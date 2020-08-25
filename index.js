@@ -4,9 +4,11 @@ const DEFAULT_CONFIG = {
   pid: 'pid'
 }
 
-const treeHanlder = {
-  listToTree (list, config = {}) {
-    config = Object.assign({}, DEFAULT_CONFIG, config)
+const getConfig = config => Object.assign({}, DEFAULT_CONFIG, config)
+
+const tools = {
+  fromList (list, config = {}) {
+    config = getConfig(config)
     const nodeMap = new Map(), result = [], { id, children, pid } = config
     for (const node of list) {
       node[children] = node[children] || []
@@ -19,8 +21,8 @@ const treeHanlder = {
     return result
   },
 
-  treeToList (tree, config = {}) {
-    config = Object.assign({}, DEFAULT_CONFIG, config)
+  toList (tree, config = {}) {
+    config = getConfig(config)
     const { children } = config, result = [...tree]
     for (let i = 0; i < result.length; i++) {
       if (!result[i][children]) continue
@@ -29,8 +31,8 @@ const treeHanlder = {
     return result
   },
   
-  treeFindNode (tree, func, config = {}) {
-    config = Object.assign({}, DEFAULT_CONFIG, config)
+  findNode (tree, func, config = {}) {
+    config = getConfig(config)
     const { children } = config, list = [...tree]
     for (let node of list) {
       if (func(node)) return node
@@ -39,8 +41,8 @@ const treeHanlder = {
     return null
   },
 
-  treeFindNodeAll (tree, func, config = {}) {
-    config = Object.assign({}, DEFAULT_CONFIG, config)
+  findNodeAll (tree, func, config = {}) {
+    config = getConfig(config)
     const { children } = config, list = [...tree], result = []
     for (let node of list) {
       func(node) && result.push(node)
@@ -49,8 +51,8 @@ const treeHanlder = {
     return result
   },
   
-  treeFindPath (tree, func, config = {}) {
-    config = Object.assign({}, DEFAULT_CONFIG, config)
+  findPath (tree, func, config = {}) {
+    config = getConfig(config)
     const path = [], list = [...tree], visitedSet = new Set(), { children } = config
     while (list.length) {
       const node = list[0]
@@ -67,36 +69,87 @@ const treeHanlder = {
     return null
   },
 
-  treeFilter (tree, func, config = {}) {
-    config = Object.assign({}, DEFAULT_CONFIG, config)
+  findPathAll (tree, func, config = {}) {
+    config = getConfig(config)
+    const path = [], list = [...tree], result = []
+    const visitedSet = new Set(), { children } = config
+    while (list.length) {
+      const node = list[0]
+      if (visitedSet.has(node)) {
+        path.pop()
+        list.shift()
+      } else {
+        visitedSet.add(node)
+        node[children] && list.unshift(...node[children])
+        path.push(node)
+        func(node) && result.push([...path])
+      }
+    }
+    return result
+  },
+
+  filter (tree, func, config = {}) {
+    config = getConfig(config)
     const { children } = config
-    function filter (list) {
+    function listFilter (list) {
       return list.map(node => ({ ...node })).filter(node => {
-        node[children] = node[children] && filter(node[children])
+        node[children] = node[children] && listFilter(node[children])
         return func(node) || (node[children] && node[children].length)
       })
     }
-    return filter(tree)
+    return listFilter(tree)
   },
   
-  treeForEach (tree, func, config = {}) {
-    config = Object.assign({}, DEFAULT_CONFIG, config)
+  forEach (tree, func, config = {}) {
+    config = getConfig(config)
     const list = [...tree], { children } = config
-    for (const node of list) {
-      func(node)
-      node[children] && list.push(...node[children])
+    for (let i = 0; i < list.length; i++) {
+      func(list[i])
+      list[i][children] && list.splice(i + 1, 0, ...list[i][children])
     }
   },
 
+  _insert (tree, node, targetNode, config, after) {
+    config = getConfig(config)
+    const { children } = config
+    function insert (list) {
+      let idx = list.indexOf(node)
+      idx < 0 ? list.forEach(n => insert(n[children] || [])) : list.splice(idx + after, 0, targetNode)
+    }
+    insert(tree, node)
+  },
+
+  insertBefore (tree, newNode, oldNode, config = {}) {
+    tools._insert(tree, oldNode, newNode, config, 0)
+  },
+
+  insertAfter (tree, oldNode, newNode, config = {}) {
+    tools._insert(tree, oldNode, newNode, config, 1)
+  },
+
+}
+
+const makeHandlers = () => {
+  const obj = {}
+  for (let key in tools) {
+    if (key.startsWith('_')) continue
+    obj[key] = tools[key]
+  }
+  return obj
+}
+
+const handlers = makeHandlers()
+
+const treeHandler = {
+  ...handlers,
   createInstance (config) {
     const obj = {}
-    for (let key in treeHanlder) {
-      const func = treeHanlder[key]
-      if (func == treeHanlder.createInstance) continue
+    for (const key in handlers) {
+      const func = handlers[key]
       obj[key] = (...args) => func(...args, config)
     }
     return obj
   }
 }
 
-module.exports = treeHanlder
+module.exports = treeHandler
