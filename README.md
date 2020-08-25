@@ -36,8 +36,8 @@ import treeTool from 'tree-tool'
 | 查找符合条件的所有节点的路径 | treeTool.findPathAll(tree, callback[, config]) | 返回符合条件(callback(node)为true)的节点路径组成的数组 |
 | 树结构筛选 | treeTool.filter(tree, callback[, config]) | 返回符合筛选条件(callback(node)为true)的树节点构成的树，一个节点符合条件，其祖先节点也会被保留返回 |
 | 树结构遍历 | treeTool.forEach(tree, callback[, config]) | 对于所有节点node调用callback(node)，深度优先 |
-| 在指定node前插入newNode | treeTool.insertBefore (tree, newNode, oldNode[, config]) { | 如果树中没有oldNode，则不会改变原数组。注意node和newNode的参数顺序，和它们在树中的顺序一致 |
-| 在指定node后插入newNode | treeTool.insertAfter (tree, oldNode, newNode[, config]) { | 如果树中没有oldNode，则不会改变原数组。注意node和newNode的参数顺序，和它们在树中的顺序一致 |
+| 在指定oldNode前插入newNode | treeTool.insertBefore (tree, newNode, oldNode[, config]) { | 如果树中没有oldNode，则不会改变原数组。注意oldNode和newNode的参数顺序，和它们在树中的顺序一致 |
+| 在指定oldNode后插入newNode | treeTool.insertAfter (tree, oldNode, newNode[, config]) { | 如果树中没有oldNode，则不会改变原数组。注意oldNode和newNode的参数顺序，和它们在树中的顺序一致 |
 | 创建闭包了配置项config的实例 | treeTool.createInstance(config) | 为了避免每个函数都传入config参数，你可以使用该API创建一个实例，以上所有API可以当成实例方法使用 |
 
 参数说明：
