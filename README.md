@@ -16,7 +16,7 @@ npm install tree-tool
 
 ## 三、使用
 
-### 引用
+### 引入
 ```js
 // commonjs
 const treeTool = require('tree-tool')
