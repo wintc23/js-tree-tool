@@ -1,4 +1,4 @@
-const tree = require('./index')
+const tree = require('./dist/index')
 
 function getTree () {
   const tree = [
