@@ -23,6 +23,10 @@ const treeTool = require('tree-tool')
 
 // esm
 import treeTool from 'tree-tool'
+
+// 通过html标签引入
+<script src="https://unpkg.com/tree-tool/dist/index.js"></script>
+// 加载完成后会有属性window.treeTool
 ```
 
 ### API说明
@@ -38,6 +42,7 @@ import treeTool from 'tree-tool'
 | 树结构遍历 | treeTool.forEach(tree, callback[, config]) | children | 对于所有节点node调用callback(node)，深度优先 |
 | 在指定oldNode前插入newNode | treeTool.insertBefore (tree, newNode, oldNode[, config]) | children | 如果树中没有oldNode，则不会改变原数组。注意oldNode和newNode的参数顺序，和它们在树中的顺序一致 |
 | 在指定oldNode后插入newNode | treeTool.insertAfter (tree, oldNode, newNode[, config]) | children | 如果树中没有oldNode，则不会改变原数组。注意oldNode和newNode的参数顺序，和它们在树中的顺序一致 |
+| 删除符合条件的所有节点 | treeTool.removeNode(tree, callback[, config]) | children | 删除符合条件(callback(node)为true)的所有节点及其子节点 |
 | 创建闭包了配置项config的实例 | treeTool.createInstance(config) | 无 | 为了避免每个函数都传入config参数，你可以使用该API创建一个实例，以上所有API可以当成实例方法使用 |
 
 参数说明：
@@ -268,6 +273,13 @@ function testInsertAfter () {
   const idList = []
   instance.forEach(tree, node => idList.push(node.id))
   console.log(idList)
+}
+
+// 节点删除：删除符合条件的Node
+function testRemoveNode () {
+  const tree = getTree()
+  instance.removeNode(tree, n => n.id == '1')
+  console.log(tree)
 }
 
 ```

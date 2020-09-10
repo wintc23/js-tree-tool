@@ -162,6 +162,13 @@ function testInsertAfter () {
   console.log(idList)
 }
 
+// 节点删除：删除符合条件的Node
+function testRemoveNode () {
+  const tree = getTree()
+  instance.removeNode(tree, n => n.id == '1')
+  console.log(tree)
+}
+
 function test () {
   // testToList()
   // testFromList()
@@ -173,6 +180,7 @@ function test () {
   // testFindPathAll()
   // testInsertBefore()
   // testInsertAfter()
+  testRemoveNode()
 }
 
 test()

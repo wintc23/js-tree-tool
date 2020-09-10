@@ -127,6 +127,19 @@ const tools = {
     tools._insert(tree, oldNode, newNode, config, 1)
   },
 
+  removeNode (tree, func, config = {}) {
+    config = getConfig(config)
+    const { children } = config, list = [tree]
+    while (list.length) {
+      const nodeList = list.shift()
+      const delList = nodeList.reduce((r, n, idx) => (func(n) && r.push(idx), r), [])
+      delList.reverse()
+      delList.forEach(idx => nodeList.splice(idx, 1))
+      const childrenList = nodeList.map(n => n[children]).filter(l => l && l.length)
+      list.push(...childrenList)
+    }
+  }
+
 }
 
 const makeHandlers = () => {
@@ -152,4 +165,8 @@ const treeHandler = {
   }
 }
 
-module.exports = treeHandler
+if (typeof module == 'undefined' && typeof window != 'undefined') {
+  window.treeTool = treeHandler
+} else {
+  module.exports = treeHandler
+}
