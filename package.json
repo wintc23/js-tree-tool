@@ -1,6 +1,6 @@
 {
   "name": "tree-tool",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "为Javascript操作树结构数据提供的一些便捷接口",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
