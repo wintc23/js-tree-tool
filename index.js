@@ -165,8 +165,8 @@ const treeHandler = {
   }
 }
 
-if (typeof module == 'undefined' && typeof window != 'undefined') {
+if (typeof window != 'undefined') {
   window.treeTool = treeHandler
-} else {
-  module.exports = treeHandler
 }
+
+module.exports = treeHandler
