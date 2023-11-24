@@ -1,4 +1,4 @@
-const tree = require('./dist/index')
+import tree from './dist/index.mjs'
 
 function getTree () {
   const tree = [
