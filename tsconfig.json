@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "declarationDir": "./dist",
+    "lib": ["ESNext"],
+  }
+}
